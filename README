@@ -1,0 +1,8 @@
+PyTIS is work in progress. It works well for the features that are implemented,
+but at the time of writing, there are only a few small features. The idea is to
+extend the program over the course of time such that it can be used for
+transition interface sampling, or other extended ensemble methods.
+
+For more information, see: http://TODO
+
+
