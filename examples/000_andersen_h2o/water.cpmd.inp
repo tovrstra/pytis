@@ -1,0 +1,44 @@
+&CPMD
+ MOLECULAR DYNAMICS BO
+${restart}
+
+ TRAJECTORY XYZ
+
+ TEMPERATURE
+  ${temp}
+
+ MAXSTEP
+  2
+ 
+ TIMESTEP
+  1.0
+
+&END
+  
+&SYSTEM
+ SYMMETRY
+  1
+ CELL
+  10.00 1.0 1.0  0.0  0.0  0.0
+ CUTOFF
+  70.0
+&END 
+
+&DFT
+ FUNCTIONAL LDA
+&END  
+
+&ATOMS
+*H_VDB_LDA.psp FORMATTED
+ LMAX=S
+${h_atoms}
+*O_VDB_LDA.psp FORMATTED
+ LMAX=P
+${o_atoms}
+ VELOCITIES
+${velocities} 
+ END VELOCITIES
+ ISOTOPES
+${isotopes}
+&END  
+
