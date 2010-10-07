@@ -18,6 +18,7 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/>
 #
 # --
+"""Wrappers around programs that make moves through the phase space."""
 
 
 import os, shutil, string, numpy
@@ -32,7 +33,16 @@ __all__ = ["CPMDWrapper"]
 
 
 class CPMDWrapper(object):
+    """A wrapper that uses CPMD program to move trough the phase space."""
     def __init__(self, binary, fn_template, fns_other):
+        """
+           Arguments:
+            | ``binary`` -- The CPMD binary.
+            | ``fn_template`` -- A template for the CPMD input.
+            | ``fns_other`` -- A list of files that must also be present in
+                               the directory where the move is computed, e.g.
+                               pseudopotential files.
+        """
         self.binary = binary
         f = open(fn_template)
         self.template = string.Template(f.read())
@@ -40,11 +50,29 @@ class CPMDWrapper(object):
         self.fns_other = fns_other
 
     def move(self, system, init_state, dirname):
+        """Perform a move trough the phase space.
+
+           Arguments:
+            | ``system`` -- A ``System`` instance.
+            | ``init_state`` -- A state object with the initial state to put
+                                into CPMD.
+            | ``dirname`` -- The directory where the CPMD job has to be carried
+                             out.
+        """
         self.create_input(system, init_state, dirname)
         self.run_cpmd(dirname, "slice")
         return self.get_final_state(system, dirname)
 
     def create_input(self, system, init_state, dirname):
+        """Create an input file for CPMD.
+
+           Arguments:
+            | ``system`` -- A ``System`` instance.
+            | ``init_state`` -- A state object with the initial state to put
+                                into CPMD.
+            | ``dirname`` -- The directory where the CPMD job has to be carried
+                             out.
+        """
         # check the atom order, symbols should be in alphabetical order
         for s1, s2 in zip(system.symbols, sorted(system.symbols)):
             if s1 != s2:
@@ -99,11 +127,24 @@ class CPMDWrapper(object):
         f.close()
 
     def run_cpmd(self, dirname, prefix):
+        """Execute the CPMD binary on in input file with the given prefix.
+
+           Arguments:
+            | ``dirname`` -- The directory with the input.
+            | ``prefix`` -- The prefix for the input (.inp) and output (.out)
+        """
         # run cpmd, very simple for now
         os.system("cd %s; %s %s.inp > %s.out" % (dirname, self.binary, prefix, prefix))
         # get back the final pos and vel
 
     def get_final_state(self, system, dirname):
+        """Get the last state from the CPMD output
+
+           Arguments:
+            | ``system`` -- A ``System`` instance.
+            | ``dirname`` -- The directory where the CPMD job has to be carried
+                             out.
+        """
         # read the final positions and velocities from the file TRAJECTORY.
         f = file(os.path.join(dirname, "TRAJECTORY"), "r")
         ## read the last time step
