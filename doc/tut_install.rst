@@ -80,7 +80,7 @@ home directory. Make sure you execute these commands in some sort of temporary
 directory. ::
 
     git clone git://molmod.ugent.be/git/molmod.git
-    git clone git://TODO
+    git clone git://github.com/tovrstra/pytis.git
     (cd molmod; ./setup.py install --home=~)
     (cd pytis; ./setup.py install --home=~)
 
