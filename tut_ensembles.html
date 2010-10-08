@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working with Ensembles &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="PyTIS examples" href="tut_examples.html" />
+    <link rel="prev" title="Working with Wrappers" href="tut_wrappers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tut_examples.html" title="PyTIS examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tut_wrappers.html" title="Working with Wrappers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="working-with-ensembles">
+<span id="ensembles"></span><h1>Working with Ensembles<a class="headerlink" href="#working-with-ensembles" title="Permalink to this headline">¶</a></h1>
+<p>Ensembles in PyTIS are currently limited to modifications of the state between
+two MD simulations executed by a wrapper. It is assumed that the short MD
+simulations are carried out in the NVE ensemble.</p>
+<div class="section" id="the-nve-ensemble">
+<h2>The NVE ensemble<a class="headerlink" href="#the-nve-ensemble" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation: <tt class="xref docutils literal"><span class="pre">NVE</span></tt></p>
+<p>This ensemble never makes any changes to the state object. It is created as
+follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ensemble</span> <span class="o">=</span> <span class="n">NVE</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-andersen-thermostat">
+<h2>The Andersen thermostat<a class="headerlink" href="#the-andersen-thermostat" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation: <tt class="xref docutils literal"><span class="pre">NVTAndersen</span></tt></p>
+<p>The Andersen thermostat resets the current atomic velocities with a given
+probability per unit of time. The new velocities are samples from the
+Maxwell-Boltzmann distribution. The ensemble is created as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ensemble</span> <span class="o">=</span> <span class="n">NVTAndersen</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first argument is the temperature. The second argument is the probability
+that the velocities are updated before the wrapper is called.</p>
+</div>
+<div class="section" id="creating-new-ensembles">
+<h2>Creating new ensembles<a class="headerlink" href="#creating-new-ensembles" title="Permalink to this headline">¶</a></h2>
+<p>One can easily create new ensemble classes. An ensemble class must have an
+update method that has a state object as argument and returns either the same or
+a new modified state object.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Working with Ensembles</a><ul>
+<li><a class="reference external" href="#the-nve-ensemble">The NVE ensemble</a></li>
+<li><a class="reference external" href="#the-andersen-thermostat">The Andersen thermostat</a></li>
+<li><a class="reference external" href="#creating-new-ensembles">Creating new ensembles</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tut_wrappers.html"
+                                  title="previous chapter">Working with Wrappers</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tut_examples.html"
+                                  title="next chapter">PyTIS examples</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tut_ensembles.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tut_examples.html" title="PyTIS examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tut_wrappers.html" title="Working with Wrappers"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

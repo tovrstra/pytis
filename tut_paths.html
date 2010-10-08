@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working with Systems, States and Paths &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="Working with Wrappers" href="tut_wrappers.html" />
+    <link rel="prev" title="Installation" href="tut_install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tut_wrappers.html" title="Working with Wrappers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tut_install.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="working-with-systems-states-and-paths">
+<span id="paths"></span><h1>Working with Systems, States and Paths<a class="headerlink" href="#working-with-systems-states-and-paths" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="systems">
+<h2>Systems<a class="headerlink" href="#systems" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation <a title="pytis.paths.System" class="reference external" href="ref_paths.html#pytis.paths.System"><tt class="xref docutils literal"><span class="pre">pytis.paths.System</span></tt></a></p>
+<p>A <tt class="docutils literal"><span class="pre">System</span></tt> object contains all the time-independent information of a molecular
+system. One must construct system object for the preparation of simulations with
+PyTIS. <tt class="docutils literal"><span class="pre">System</span></tt> objects have the following attributes, which are also
+arguments to the constructor:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Mandatory:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">symbols</span></tt> &#8211; A list of symbols for the atoms.</li>
+<li><tt class="docutils literal"><span class="pre">masses</span></tt> &#8211; A numpy array corresponding masses of the atoms in atomic
+units.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Optional:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">numbers</span></tt> &#8211; A numpy array with atom numbers.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="states">
+<h2>States<a class="headerlink" href="#states" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation <a title="pytis.paths.State" class="reference external" href="ref_paths.html#pytis.paths.State"><tt class="xref docutils literal"><span class="pre">pytis.paths.State</span></tt></a></p>
+<p>A <tt class="docutils literal"><span class="pre">State</span></tt> object contains all the time-dependent information of a system at
+a certain time step. The following attributes are also the arguments of the
+constructor.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Mandatory:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">pos</span></tt> &#8211; A numpy array with N rows and 3 columns containing all the
+Cartesian positions of the atoms.</li>
+<li><tt class="docutils literal"><span class="pre">vel</span></tt> &#8211; A numpy array with N rows and 3 columns containing all the
+Cartesian velocities of the atoms.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Optional:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; A directory containing the computation that leads to this
+state.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-system-and-an-initial-state">
+<h2>Setting up a system and an initial state<a class="headerlink" href="#setting-up-a-system-and-an-initial-state" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation <a title="pytis.paths.load_xyz" class="reference external" href="ref_paths.html#pytis.paths.load_xyz"><tt class="xref docutils literal"><span class="pre">pytis.paths.load_xyz()</span></tt></a></p>
+<p>The function <tt class="docutils literal"><span class="pre">load_xyz</span></tt> is a convenient way to construct a system and an
+initial state based on a conventional XYZ file. It is used as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">system</span><span class="p">,</span> <span class="n">init_state</span> <span class="o">=</span> <span class="n">load_xyz</span><span class="p">(</span><span class="s">&quot;start.xyz&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Paths<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation <a title="pytis.paths.Path" class="reference external" href="ref_paths.html#pytis.paths.Path"><tt class="xref docutils literal"><span class="pre">pytis.paths.Path</span></tt></a></p>
+<p>A <tt class="docutils literal"><span class="pre">Path</span></tt> object keeps track of subsequent states of a system at regular time
+steps. One creates a Path object as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">,</span> <span class="n">ensemble</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">system</span></tt> and <tt class="docutils literal"><span class="pre">init_state</span></tt> object have to be created as discussed above.
+The three other arguments have the following meaning.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">wrapper</span></tt> &#8211; A Wrapper object that knows how to run short MD or MC
+simulations using an external program. A wrapper has a fixed API, independent
+of the underlying program. Wrappers are discussed in the chapter
+<a class="reference external" href="tut_wrappers.html#wrappers"><em>Working with Wrappers</em></a>.</li>
+<li><tt class="docutils literal"><span class="pre">ensemble</span></tt> &#8211; An ensemble at the PyTIS level. These are discussed in the
+chapter <a class="reference external" href="tut_ensembles.html#ensembles"><em>Working with Ensembles</em></a>. The Path object calls the <tt class="docutils literal"><span class="pre">update</span></tt> method of the
+ensemble object to modify the state prior to running</li>
+<li><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; A directory in which a subdirectory will be created for every
+MD simulation performed by the wrapper. It may not exist yet when the Path
+object is created.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Working with Systems, States and Paths</a><ul>
+<li><a class="reference external" href="#systems">Systems</a></li>
+<li><a class="reference external" href="#states">States</a></li>
+<li><a class="reference external" href="#setting-up-a-system-and-an-initial-state">Setting up a system and an initial state</a></li>
+<li><a class="reference external" href="#id1">Paths</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tut_install.html"
+                                  title="previous chapter">Installation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tut_wrappers.html"
+                                  title="next chapter">Working with Wrappers</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tut_paths.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tut_wrappers.html" title="Working with Wrappers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tut_install.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

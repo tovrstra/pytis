@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pytis.wrappers – Interfaces to MD/MC codes &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="prev" title="pytis.paths – Systems, States and Paths" href="ref_paths.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="ref_paths.html" title="pytis.paths – Systems, States and Paths"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pytis.wrappers">
+<h1><tt class="docutils literal"><span class="pre">pytis.wrappers</span></tt> &#8211; Interfaces to MD/MC codes<a class="headerlink" href="#module-pytis.wrappers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pytis.wrappers.CPMDWrapper">
+<em class="property">class </em><tt class="descclassname">pytis.wrappers.</tt><tt class="descname">CPMDWrapper</tt><big>(</big><em>binary</em>, <em>fn_template</em>, <em>fns_other</em><big>)</big><a class="headerlink" href="#pytis.wrappers.CPMDWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper that uses CPMD program to move trough the phase space.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">binary</span></tt> &#8211; The CPMD binary.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">fn_template</span></tt> &#8211; A template for the CPMD input.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">fns_other</span></tt> &#8211; A list of files that must also be present in
+the directory where the move is computed, e.g.
+pseudopotential files.</div>
+</div>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pytis.wrappers.CPMDWrapper.create_input">
+<tt class="descname">create_input</tt><big>(</big><em>system</em>, <em>init_state</em>, <em>dirname</em><big>)</big><a class="headerlink" href="#pytis.wrappers.CPMDWrapper.create_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an input file for CPMD.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; A <tt class="docutils literal"><span class="pre">System</span></tt> instance.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">init_state</span></tt> &#8211; A state object with the initial state to put
+into CPMD.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; The directory where the CPMD job has to be carried
+out.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytis.wrappers.CPMDWrapper.get_final_state">
+<tt class="descname">get_final_state</tt><big>(</big><em>system</em>, <em>dirname</em><big>)</big><a class="headerlink" href="#pytis.wrappers.CPMDWrapper.get_final_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last state from the CPMD output</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; A <tt class="docutils literal"><span class="pre">System</span></tt> instance.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; The directory where the CPMD job has to be carried
+out.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytis.wrappers.CPMDWrapper.move">
+<tt class="descname">move</tt><big>(</big><em>system</em>, <em>init_state</em>, <em>dirname</em><big>)</big><a class="headerlink" href="#pytis.wrappers.CPMDWrapper.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a move trough the phase space.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; A <tt class="docutils literal"><span class="pre">System</span></tt> instance.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">init_state</span></tt> &#8211; A state object with the initial state to put
+into CPMD.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; The directory where the CPMD job has to be carried
+out.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytis.wrappers.CPMDWrapper.run_cpmd">
+<tt class="descname">run_cpmd</tt><big>(</big><em>dirname</em>, <em>prefix</em><big>)</big><a class="headerlink" href="#pytis.wrappers.CPMDWrapper.run_cpmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the CPMD binary on in input file with the given prefix.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; The directory with the input.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">prefix</span></tt> &#8211; The prefix for the input (.inp) and output (.out)</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="ref_paths.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pytis.paths</span></tt> &#8211; Systems, States and Paths</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/ref_wrappers.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ref_paths.html" title="pytis.paths – Systems, States and Paths"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pytis.paths – Systems, States and Paths &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="pytis.wrappers – Interfaces to MD/MC codes" href="ref_wrappers.html" />
+    <link rel="prev" title="pytis.ensembles – Statistical ensembles" href="ref_ensembles.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="ref_wrappers.html" title="pytis.wrappers – Interfaces to MD/MC codes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ref_ensembles.html" title="pytis.ensembles – Statistical ensembles"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pytis.paths">
+<h1><tt class="docutils literal"><span class="pre">pytis.paths</span></tt> &#8211; Systems, States and Paths<a class="headerlink" href="#module-pytis.paths" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pytis.paths.System">
+<em class="property">class </em><tt class="descclassname">pytis.paths.</tt><tt class="descname">System</tt><big>(</big><em>symbols</em>, <em>masses</em>, <em>numbers=None</em><big>)</big><a class="headerlink" href="#pytis.paths.System" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the time-independent properties of a system.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">symbols</span></tt> &#8211; Symbols for the atoms, i.e. elements or force-field
+atom types.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">masses</span></tt> &#8211; An array with atomic masses in atomic units.
+(The mass of an electron is 1.0 in atomic units.)</div>
+</div>
+</dd>
+<dt>Optional argument:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">numbers</span></tt> &#8211; The atomic numbers</div>
+</div>
+</dd>
+</dl>
+<p>Most arguments of the constructor are simply assigned as attributes
+of the object, except for all the initial state related info. These
+are bundled in a <tt class="docutils literal"><span class="pre">State</span></tt> object and assigned to the <tt class="docutils literal"><span class="pre">init_state</span></tt>
+attribute.</p>
+<dl class="attribute">
+<dt id="pytis.paths.System.size">
+<tt class="descname">size</tt><a class="headerlink" href="#pytis.paths.System.size" title="Permalink to this definition">¶</a></dt>
+<dd>The number of atoms</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pytis.paths.State">
+<em class="property">class </em><tt class="descclassname">pytis.paths.</tt><tt class="descname">State</tt><big>(</big><em>pos</em>, <em>vel</em>, <em>dirname=None</em><big>)</big><a class="headerlink" href="#pytis.paths.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the time-dependent properties of a system at a certain time step.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">pos</span></tt> &#8211; A (N,3) array with positions in bohr.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">vel</span></tt> &#8211; A (N,3) array with velocities in atomic units.</div>
+</div>
+</dd>
+<dt>Optional argument:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; The directory with the computation of the move that
+leads towards this state.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pytis.paths.load_xyz">
+<tt class="descclassname">pytis.paths.</tt><tt class="descname">load_xyz</tt><big>(</big><em>fn_xyz</em>, <em>temp</em>, <em>masses=None</em><big>)</big><a class="headerlink" href="#pytis.paths.load_xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a system and state from a simple XYZ file and a temperature.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">fn_xyz</span></tt> &#8211; The filename of the XYZ file.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">temp</span></tt> &#8211; The temperature for the initial velocities.</div>
+</div>
+</dd>
+<dt>Optional argument:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">masses</span></tt> &#8211; An array with masses to override the IUPAC 2005
+values from the MolMod package.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="pytis.paths.Path">
+<em class="property">class </em><tt class="descclassname">pytis.paths.</tt><tt class="descname">Path</tt><big>(</big><em>system</em>, <em>init_state</em>, <em>wrapper</em>, <em>ensemble</em>, <em>dirname</em><big>)</big><a class="headerlink" href="#pytis.paths.Path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dynamic path through an ensemble</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; An object of the type <tt class="docutils literal"><span class="pre">System</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">init_state</span></tt> &#8211; The initial state for the path, which must be
+a <tt class="docutils literal"><span class="pre">State</span></tt> instance.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">wrapper</span></tt> &#8211; A wrapper instance for the individual moves through
+the ensemble.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">dirname</span></tt> &#8211; A directory where all the computations of the
+individual moves are stored in subdirectories.</div>
+</div>
+</dd>
+</dl>
+<p>The <tt class="docutils literal"><span class="pre">frames</span></tt> attribute is a list of the states generated by
+subsequent moves. The first item is the init_state object. Subsequent
+items are added by calling the the <tt class="docutils literal"><span class="pre">run</span></tt> method,</p>
+<dl class="method">
+<dt id="pytis.paths.Path.run">
+<tt class="descname">run</tt><big>(</big><em>num_moves</em><big>)</big><a class="headerlink" href="#pytis.paths.Path.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a number of moves to the <tt class="docutils literal"><span class="pre">frames</span></tt> list.</p>
+<dl class="docutils">
+<dt>Argument:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">num_moves</span></tt> &#8211; The number of moves to add.</div>
+</div>
+</dd>
+</dl>
+<p>This method relies on the wrapper to compute the moves.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pytis.paths.Path.write_to_xyz">
+<tt class="descname">write_to_xyz</tt><big>(</big><em>fn_xyz</em><big>)</big><a class="headerlink" href="#pytis.paths.Path.write_to_xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a trajectory file based on the <tt class="docutils literal"><span class="pre">frames</span></tt> list.</p>
+<dl class="docutils">
+<dt>Argument:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">fn_xyz</span></tt> &#8211; The filename for the trajectory.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="ref_ensembles.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">pytis.ensembles</span></tt> &#8211; Statistical ensembles</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ref_wrappers.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">pytis.wrappers</span></tt> &#8211; Interfaces to MD/MC codes</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/ref_paths.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ref_wrappers.html" title="pytis.wrappers – Interfaces to MD/MC codes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ref_ensembles.html" title="pytis.ensembles – Statistical ensembles"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

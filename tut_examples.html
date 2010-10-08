@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyTIS examples &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="pytis.ensembles – Statistical ensembles" href="ref_ensembles.html" />
+    <link rel="prev" title="Working with Ensembles" href="tut_ensembles.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="ref_ensembles.html" title="pytis.ensembles – Statistical ensembles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tut_ensembles.html" title="Working with Ensembles"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pytis-examples">
+<h1>PyTIS examples<a class="headerlink" href="#pytis-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-simple-andersen-nvt-simulation-on-top-of-cpmd">
+<h2>A Simple Andersen NVT simulation on top of CPMD<a class="headerlink" href="#a-simple-andersen-nvt-simulation-on-top-of-cpmd" title="Permalink to this headline">¶</a></h2>
+<p>Location: <tt class="docutils literal"><span class="pre">examples/000_andersen_h2o</span></tt></p>
+<p>This example demonstrates the basic usage of the <tt class="docutils literal"><span class="pre">CPMDWrapper</span></tt> and how one
+works with <tt class="docutils literal"><span class="pre">Path</span></tt> objects to run and Andersen NVT molecular dynamics
+simulation, using conventional NVE Born-Oppenheimer MD simulations in CPMD.</p>
+<p>The PyTIS script: <tt class="docutils literal"><span class="pre">examples/000_andersen_h2o/md.py</span></tt></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pytis</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">wrapper</span> <span class="o">=</span> <span class="n">CPMDWrapper</span><span class="p">(</span><span class="s">&quot;cpmd.x&quot;</span><span class="p">,</span> <span class="s">&quot;water.cpmd.inp&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;../cpmd/H_VDB_LDA.psp&quot;</span><span class="p">,</span> <span class="s">&quot;../cpmd/O_VDB_LDA.psp&quot;</span><span class="p">])</span>
+<span class="n">ensemble</span> <span class="o">=</span> <span class="n">NVTAndersen</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">system</span><span class="p">,</span> <span class="n">init_state</span> <span class="o">=</span> <span class="n">load_xyz</span><span class="p">(</span><span class="s">&quot;init.xyz&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">,</span> <span class="n">ensemble</span><span class="p">,</span> <span class="s">&quot;single&quot;</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">write_to_xyz</span><span class="p">(</span><span class="s">&quot;trajectory.xyz&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The meaning of each line is explained below:</p>
+<blockquote>
+<p><strong>Line 1</strong> &#8211; Import everything from the PyTIS library.</p>
+<p><strong>Line 3</strong> &#8211; Define the CPMD wrapper. One must specify a binary, a template
+file and a list of other files needed in the input directory. (See
+<a class="reference external" href="tut_wrappers.html#cpmd-wrapper"><em>The CPMD wrapper</em></a> for more details.)</p>
+<p><strong>Line 4</strong> &#8211; Define the NVT Andersen ensemble at a temperature of 300K and
+an update probability of 1%.</p>
+<p><strong>Line 5</strong> &#8211; Create a system and an initial state from a simple XYZ file
+and a temperature for the initial velocities.</p>
+<p><strong>Line 6</strong> &#8211; Create a path object. It needs a definition of the system and
+the initial state. It needs a wrapper to perform moves through the phase
+space, and an ensemble.</p>
+<p><strong>Line 7</strong> &#8211; Add two moves to the path, starting from the initial state.
+All states, including the initial state, are stored in <tt class="docutils literal"><span class="pre">path.frames</span></tt>.</p>
+<p><strong>Line 8</strong> &#8211; Write an XYZ trajectory file.</p>
+</blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">PyTIS examples</a><ul>
+<li><a class="reference external" href="#a-simple-andersen-nvt-simulation-on-top-of-cpmd">A Simple Andersen NVT simulation on top of CPMD</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tut_ensembles.html"
+                                  title="previous chapter">Working with Ensembles</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ref_ensembles.html"
+                                  title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pytis.ensembles</span></tt> &#8211; Statistical ensembles</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tut_examples.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ref_ensembles.html" title="pytis.ensembles – Statistical ensembles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tut_ensembles.html" title="Working with Ensembles"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

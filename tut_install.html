@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="Working with Systems, States and Paths" href="tut_paths.html" />
+    <link rel="prev" title="PyTIS Homepage" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tut_paths.html" title="Working with Systems, States and Paths"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PyTIS Homepage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preparing-your-linux-system">
+<h2>Preparing your Linux system<a class="headerlink" href="#preparing-your-linux-system" title="Permalink to this headline">¶</a></h2>
+<p>Some software packages should be installed before PyTIS can be installed or
+used. It is recommended to use the software package management of your Linux
+distribution to install these dependencies.</p>
+<p>The following software must be installed for PyTIS:</p>
+<ul class="simple">
+<li>Python 2.5, 2.6 or 2.7 (including the header files): <a class="reference external" href="http://www.python.org/doc/">http://www.python.org/doc/</a></li>
+<li>Numpy 1.0 or later: <a class="reference external" href="http://numpy.scipy.org/">http://numpy.scipy.org/</a></li>
+<li>A Fortran and a C compiler supported by the F2PY module in Numpy, e.g.
+gfortran and gcc: <a class="reference external" href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></li>
+<li>Git: <a class="reference external" href="http://git-scm.com/">http://git-scm.com/</a></li>
+</ul>
+<p>Most Linux distributions can install this software with just a single command
+on the command line by the administrator. They are listed below for several
+popular Linux distributions:</p>
+<ul>
+<li><p class="first">Ubuntu 10.4:</p>
+<div class="highlight-python"><pre>sudo apt-get install python python-dev python-numpy gfortran gcc git-core</pre>
+</div>
+</li>
+<li><p class="first">Debian 5. You first have to become root because the sudo program is not
+configured by default.</p>
+<div class="highlight-python"><pre>su -
+apt-get install python python-dev python-numpy gfortran gcc git-core
+exit</pre>
+</div>
+</li>
+<li><p class="first">Fedora 12 and 13. You first have to become root because the sudo program is
+not configured by default.</p>
+<div class="highlight-python"><pre>su -
+pkcon install python-devel numpy numpy-f2py gcc-gfortran gcc git
+exit</pre>
+</div>
+</li>
+<li><p class="first">Suse 11.2:</p>
+<div class="highlight-python"><pre>sudo zypper install python-devel python-numpy gcc gcc-fortran git</pre>
+</div>
+<p>There seems to be something odd going on with the default Python configuration
+on Suse installations. You have to edit the file
+<tt class="docutils literal"><span class="pre">/usr/lib64/python2.4/distutils/distutils.cfg</span></tt> or
+<tt class="docutils literal"><span class="pre">/usr/lib32/python2.4/distutils/distutils.cfg</span></tt>, depending on the CPU
+architecture, to comment out the line <tt class="docutils literal"><span class="pre">prefix=/usr/local</span></tt> with a <tt class="docutils literal"><span class="pre">#</span></tt>
+symbol. Otherwise it is impossible to install Python packages in the home
+directory, as we will do below.</p>
+</li>
+</ul>
+<p>In order to enable the installation and usage of Python packages in the home
+directory, as we will do in the next section, one must configure a few
+environment variables:</p>
+<ul>
+<li><p class="first">Bash users: add the following two lines to your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt> file:</p>
+<div class="highlight-python"><pre>export PYTHONPATH=$HOME/lib/python:$HOME/lib64/python:$PYTHONPATH
+export PATH=$HOME/bin:$PATH</pre>
+</div>
+</li>
+<li><p class="first">TC Shell users: add the lines to your <tt class="docutils literal"><span class="pre">~/.tcshrc</span></tt> file:</p>
+<div class="highlight-python"><pre>setenv PYTHONPATH $HOME/lib/python:$HOME/lib64/python:$PYTHONPATH
+setenv PATH $HOME/bin:$PATH</pre>
+</div>
+</li>
+</ul>
+<p>If you don&#8217;t know which shell you are using, you are probably using Bash. Note
+that some of these lines may already be present. <strong>These settings are only
+loaded in new terminal sessions, so close your terminal and open a new one
+before proceeding.</strong></p>
+</div>
+<div class="section" id="installing-the-bleeding-edge-version-of-pytis">
+<h2>Installing the bleeding edge version of PyTIS<a class="headerlink" href="#installing-the-bleeding-edge-version-of-pytis" title="Permalink to this headline">¶</a></h2>
+<p>The following series of commands will download the latest versions of the
+MolMod package (required) and PyTIS, and will then install them into your
+home directory. Make sure you execute these commands in some sort of temporary
+directory.</p>
+<div class="highlight-python"><pre>git clone git://molmod.ugent.be/git/molmod.git
+git clone git://TODO
+(cd molmod; ./setup.py install --home=~)
+(cd pytis; ./setup.py install --home=~)</pre>
+</div>
+<p>You are now ready to start using PyTIS!</p>
+</div>
+<div class="section" id="a-few-quick-checks">
+<h2>A few quick checks<a class="headerlink" href="#a-few-quick-checks" title="Permalink to this headline">¶</a></h2>
+<p>It may be interesting to double check your installation before proceeding,
+unless you <cite>feel lucky</cite>. The PyTIS and MolMod files are installed in the
+following directories:</p>
+<ul class="simple">
+<li>Modules: <tt class="docutils literal"><span class="pre">~/lib/python</span></tt> or <tt class="docutils literal"><span class="pre">~/lib64/python</span></tt></li>
+<li>Data: <tt class="docutils literal"><span class="pre">~/share</span></tt></li>
+</ul>
+<p>There should be at least some files present in these directories.</p>
+<p>The Python modules should be accessible from any Python session. This can be
+checked by starting Python interactively and loading the modules manually. There
+should be no errors when importing the modules:</p>
+<div class="highlight-python"><pre>toon@poony ~&gt; python
+Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41)
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import molmod
+&gt;&gt;&gt; import pytis
+&gt;&gt;&gt; quit()
+toon@poony ~&gt;</pre>
+</div>
+</div>
+<div class="section" id="upgrading-to-the-bleeding-edge-version-of-pytis">
+<h2>Upgrading to the bleeding edge version of PyTIS<a class="headerlink" href="#upgrading-to-the-bleeding-edge-version-of-pytis" title="Permalink to this headline">¶</a></h2>
+<p>In case you want to upgrade PyTIS to the latests development version after a
+previous install, then execute the following commands (in the same directory):</p>
+<div class="highlight-python"><pre>(cd molmod; git pull; rm -r ~/lib*/python/molmod*; ./setup.py install --home=~)
+(cd pytis; git pull; rm -r ~/lib*/python/pytis*; ./setup.py install --home=~)</pre>
+</div>
+</div>
+<div class="section" id="testing-your-installation">
+<h2>Testing your installation<a class="headerlink" href="#testing-your-installation" title="Permalink to this headline">¶</a></h2>
+<p>For the development and testing one needs to install three additional packages:</p>
+<blockquote>
+<ul class="simple">
+<li>Nosetests: <a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/0.11.2/">http://somethingaboutorange.com/mrl/projects/nose/0.11.2/</a></li>
+<li>Sphinx: <a class="reference external" href="http://sphinx.pocoo.org/">http://sphinx.pocoo.org/</a></li>
+</ul>
+</blockquote>
+<p>Most Linux distributions can install this software with just a single command on
+the command line by the administrator. The other packages are installed as
+follows:</p>
+<ul>
+<li><p class="first">Ubuntu 10.4:</p>
+<div class="highlight-python"><pre>sudo apt-get install python-nose python-sphinx</pre>
+</div>
+</li>
+<li><p class="first">Debian 5:</p>
+<div class="highlight-python"><pre>su -
+apt-get install python-nose python-sphinx
+exit</pre>
+</div>
+</li>
+<li><p class="first">Fedora 12 and 13. You first have to become root because the sudo program is
+not configured by default.</p>
+<div class="highlight-python"><pre>su -
+pkcon install python-nose sphinx
+exit</pre>
+</div>
+</li>
+<li><p class="first">Suse 11.2:</p>
+<div class="highlight-python"><pre>sudo zypper install python-nose python-sphinx
+
+cd pytis
+./setup.py build_ext -i
+nosetests -v</pre>
+</div>
+</li>
+</ul>
+<p>This will run a series of tests to check the validity of the outcomes generated
+by PyTIS.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Installation</a><ul>
+<li><a class="reference external" href="#preparing-your-linux-system">Preparing your Linux system</a></li>
+<li><a class="reference external" href="#installing-the-bleeding-edge-version-of-pytis">Installing the bleeding edge version of PyTIS</a></li>
+<li><a class="reference external" href="#a-few-quick-checks">A few quick checks</a></li>
+<li><a class="reference external" href="#upgrading-to-the-bleeding-edge-version-of-pytis">Upgrading to the bleeding edge version of PyTIS</a></li>
+<li><a class="reference external" href="#testing-your-installation">Testing your installation</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">PyTIS Homepage</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tut_paths.html"
+                                  title="next chapter">Working with Systems, States and Paths</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tut_install.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tut_paths.html" title="Working with Systems, States and Paths"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PyTIS Homepage"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working with Wrappers &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="Working with Ensembles" href="tut_ensembles.html" />
+    <link rel="prev" title="Working with Systems, States and Paths" href="tut_paths.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tut_ensembles.html" title="Working with Ensembles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tut_paths.html" title="Working with Systems, States and Paths"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="working-with-wrappers">
+<span id="wrappers"></span><h1>Working with Wrappers<a class="headerlink" href="#working-with-wrappers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-cpmd-wrapper">
+<span id="cpmd-wrapper"></span><h2>The CPMD wrapper<a class="headerlink" href="#the-cpmd-wrapper" title="Permalink to this headline">¶</a></h2>
+<p>Reference documentation <a title="pytis.wrappers.CPMDWrapper" class="reference external" href="ref_wrappers.html#pytis.wrappers.CPMDWrapper"><tt class="xref docutils literal"><span class="pre">pytis.wrappers.CPMDWrapper</span></tt></a></p>
+<p>The <tt class="docutils literal"><span class="pre">CPMDWrapper</span></tt> can be used to run Car-Parrinello or Born-Oppenheimer MD
+simulations to move through the phase space. The constructor requires three
+arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">binary</span></tt></dt>
+<dd>A string with the CPMD binary. If the binary is in the system path, one
+does not have to specify the full path. The examples (in the
+<tt class="docutils literal"><span class="pre">examples</span></tt> directory assume that a single-cpu binary <tt class="docutils literal"><span class="pre">cpmd.x</span></tt>
+resides in the system path. One may also refer to a script that contains
+the parameters for a parallel run.</dd>
+<dt><tt class="docutils literal"><span class="pre">fn_template</span></tt></dt>
+<dd><p class="first">The file containing the template for the input of the MD simulation. The
+following keywords must be present in the template file:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">${restart}</span></tt> in the <tt class="docutils literal"><span class="pre">CPMD</span></tt> section of the input file</li>
+<li><tt class="docutils literal"><span class="pre">${temp}</span></tt> right on the line after the <tt class="docutils literal"><span class="pre">TEMPERATURE</span></tt> keyword in the
+<tt class="docutils literal"><span class="pre">CPMD</span></tt> section. This is also required in the case of NVE
+simulations.</li>
+<li><tt class="docutils literal"><span class="pre">${x_atoms}</span></tt> where x is some element or atom type in the <tt class="docutils literal"><span class="pre">ATOMS</span></tt>
+section.</li>
+<li><tt class="docutils literal"><span class="pre">${velocities}</span></tt> on the line between <tt class="docutils literal"><span class="pre">VELOCITIES</span></tt> and <tt class="docutils literal"><span class="pre">END</span>
+<span class="pre">VELOCITIES</span></tt> in the <tt class="docutils literal"><span class="pre">ATOMS</span></tt> section.</li>
+<li><tt class="docutils literal"><span class="pre">${isotopes}</span></tt> after the <tt class="docutils literal"><span class="pre">ISOTOPES</span></tt> line in the <tt class="docutils literal"><span class="pre">ATOMS</span></tt> section.</li>
+</ul>
+<p>The following template file is used in the example <tt class="docutils literal"><span class="pre">000_andersen_h2o</span></tt>:</p>
+<div class="last highlight-python"><pre>&amp;CPMD
+ MOLECULAR DYNAMICS BO
+${restart}
+
+ TRAJECTORY XYZ
+
+ TEMPERATURE
+  ${temp}
+
+ MAXSTEP
+  2
+ 
+ TIMESTEP
+  1.0
+
+&amp;END
+  
+&amp;SYSTEM
+ SYMMETRY
+  1
+ CELL
+  10.00 1.0 1.0  0.0  0.0  0.0
+ CUTOFF
+  70.0
+&amp;END 
+
+&amp;DFT
+ FUNCTIONAL LDA
+&amp;END  
+
+&amp;ATOMS
+*H_VDB_LDA.psp FORMATTED
+ LMAX=S
+${h_atoms}
+*O_VDB_LDA.psp FORMATTED
+ LMAX=P
+${o_atoms}
+ VELOCITIES
+${velocities} 
+ END VELOCITIES
+ ISOTOPES
+${isotopes}
+&amp;END  
+
+</pre>
+</div>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">fns_other</span></tt></dt>
+<dd>The filenames of other files that must be included in the directory
+where a CMPD simulation is executed, e.g. pseudopotential files.</dd>
+</dl>
+</blockquote>
+<p>It is mandatory for the CPMD wrapper that the atom symbols in the system are
+in alphabetical order, and that the same order is used in the specification of
+the pseudopotentials.</p>
+</div>
+<div class="section" id="creating-new-wrappers">
+<h2>Creating new wrappers<a class="headerlink" href="#creating-new-wrappers" title="Permalink to this headline">¶</a></h2>
+<p>One can create new wrapper classes that can be used instead of the CPMD wrapper.
+Wrappers must have a <tt class="docutils literal"><span class="pre">move</span></tt> method that takes the following arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">system</span></tt>: an instance of the <tt class="docutils literal"><span class="pre">System</span></tt> class</li>
+<li><tt class="docutils literal"><span class="pre">init_state</span></tt>: an instance of the <tt class="docutils literal"><span class="pre">State</span></tt> class. It is the initial state of
+the system that used as the starting point of a short simulation.</li>
+<li><tt class="docutils literal"><span class="pre">dirname</span></tt>: a directory where the input, output and restart files are
+stored.</li>
+</ul>
+<p>The function must return a new <tt class="docutils literal"><span class="pre">State</span></tt> object with the final positions and
+velocities of the short MD simulation.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Working with Wrappers</a><ul>
+<li><a class="reference external" href="#the-cpmd-wrapper">The CPMD wrapper</a></li>
+<li><a class="reference external" href="#creating-new-wrappers">Creating new wrappers</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tut_paths.html"
+                                  title="previous chapter">Working with Systems, States and Paths</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tut_ensembles.html"
+                                  title="next chapter">Working with Ensembles</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tut_wrappers.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tut_ensembles.html" title="Working with Ensembles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tut_paths.html" title="Working with Systems, States and Paths"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>

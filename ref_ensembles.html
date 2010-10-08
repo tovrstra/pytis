@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pytis.ensembles – Statistical ensembles &mdash; PyTIS v0.0-git documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.0-git',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyTIS v0.0-git documentation" href="index.html" />
+    <link rel="next" title="pytis.paths – Systems, States and Paths" href="ref_paths.html" />
+    <link rel="prev" title="PyTIS examples" href="tut_examples.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="ref_paths.html" title="pytis.paths – Systems, States and Paths"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tut_examples.html" title="PyTIS examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pytis.ensembles">
+<h1><tt class="docutils literal"><span class="pre">pytis.ensembles</span></tt> &#8211; Statistical ensembles<a class="headerlink" href="#module-pytis.ensembles" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pytis.ensembles.get_temperature">
+<tt class="descclassname">pytis.ensembles.</tt><tt class="descname">get_temperature</tt><big>(</big><em>system</em>, <em>state</em><big>)</big><a class="headerlink" href="#pytis.ensembles.get_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the instantaneous temperature for a given state of the system.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; An object of the type <tt class="docutils literal"><span class="pre">System</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">state</span></tt> &#8211; A corresponding <tt class="docutils literal"><span class="pre">State</span></tt> object.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pytis.ensembles.set_boltzmann_velocities">
+<tt class="descclassname">pytis.ensembles.</tt><tt class="descname">set_boltzmann_velocities</tt><big>(</big><em>temp</em>, <em>system</em>, <em>state</em><big>)</big><a class="headerlink" href="#pytis.ensembles.set_boltzmann_velocities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign random velocities based on the Boltzmann distribution.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">temp</span></tt> &#8211; The temperature in Kelvin.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; An object of the type <tt class="docutils literal"><span class="pre">System</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">state</span></tt> &#8211; A corresponding <tt class="docutils literal"><span class="pre">State</span></tt> object.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="pytis.ensembles.NVTAndersen">
+<em class="property">class </em><tt class="descclassname">pytis.ensembles.</tt><tt class="descname">NVTAndersen</tt><big>(</big><em>temp</em>, <em>rate</em><big>)</big><a class="headerlink" href="#pytis.ensembles.NVTAndersen" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Andersen thermostat for the NVT ensemble.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">temp</span></tt> &#8211; The temperature in Kelvin.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">rate</span></tt> &#8211; The probability per unit of time slices that the
+Andersen thermostat updates the velocities.</div>
+</div>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pytis.ensembles.NVTAndersen.update">
+<tt class="descname">update</tt><big>(</big><em>system</em>, <em>state</em><big>)</big><a class="headerlink" href="#pytis.ensembles.NVTAndersen.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the velocities (with a certain probability)</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><div class="first last line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">system</span></tt> &#8211; An object of the type <tt class="docutils literal"><span class="pre">System</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">state</span></tt> &#8211; A corresponding <tt class="docutils literal"><span class="pre">State</span></tt> object.</div>
+</div>
+</dd>
+</dl>
+<p>This should be called before every time move.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pytis.ensembles.NVE">
+<em class="property">class </em><tt class="descclassname">pytis.ensembles.</tt><tt class="descname">NVE</tt><a class="headerlink" href="#pytis.ensembles.NVE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The NVE ensemble.</p>
+<p>This ensemble does not update velocities.</p>
+<dl class="method">
+<dt id="pytis.ensembles.NVE.update">
+<tt class="descname">update</tt><big>(</big><em>system</em>, <em>state</em><big>)</big><a class="headerlink" href="#pytis.ensembles.NVE.update" title="Permalink to this definition">¶</a></dt>
+<dd>Stub that does nothing.</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tut_examples.html"
+                                  title="previous chapter">PyTIS examples</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ref_paths.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">pytis.paths</span></tt> &#8211; Systems, States and Paths</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/ref_ensembles.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ref_paths.html" title="pytis.paths – Systems, States and Paths"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tut_examples.html" title="PyTIS examples"
+             >previous</a> |</li>
+        <li><a href="index.html">PyTIS v0.0-git documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Titus van Erp &amp; Toon Verstraelen.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+    </div>
+  </body>
+</html>
