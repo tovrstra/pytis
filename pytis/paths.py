@@ -147,7 +147,7 @@ class Path(object):
         """
         current = self.frames[-1]
         for i in xrange(num_moves):
-            self.ensemble.update(self.system, current)
+            current = self.ensemble.update(self.system, current)
             dirname = os.path.join(self.dirname, "frame%07i" % len(self.frames))
             current = self.wrapper.move(self.system, current, dirname)
             self.frames.append(current)

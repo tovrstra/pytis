@@ -21,7 +21,7 @@
 """Collection of thermodynamic ensembles implemented at the PyTIS level."""
 
 
-import numpy
+import numpy, copy
 
 from molmod import boltzmann
 
@@ -75,7 +75,9 @@ class NVTAndersen(object):
         """
         if numpy.random.uniform(0, 1) < self.rate:
             # Reset all velocities
+            state = copy.deepcopy(state)
             set_boltzmann_velocities(self.temp, masses, state)
+        return state
 
 
 class NVE(object):
@@ -86,4 +88,4 @@ class NVE(object):
 
     def update(self, system, state):
         """Stub that does nothing."""
-        pass
+        return state
