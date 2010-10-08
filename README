@@ -1,8 +1,9 @@
 PyTIS is work in progress. It works well for the features that are implemented,
-but at the time of writing, there are only a few small features. The idea is to
-extend the program over the course of time such that it can be used for
-transition interface sampling, or other extended ensemble methods.
+but at the time of writing, only a few things are implemented. The idea is to
+gradually extend PyTIS that it can be used for transition interface sampling, or
+other extended ensemble methods.
 
-For more information, see: http://TODO
+For more information, see: http://tovrstra.githum.com/pytis
 
-
+TODO:
+- the ensemble should return a modified copy or the same state

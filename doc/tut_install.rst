@@ -3,7 +3,7 @@ Installation
 
 
 Preparing your Linux system
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some software packages should be installed before PyTIS can be installed or
 used. It is recommended to use the software package management of your Linux
@@ -72,7 +72,7 @@ before proceeding.**
 
 
 Installing the bleeding edge version of PyTIS
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following series of commands will download the latest versions of the
 MolMod package (required) and PyTIS, and will then install them into your
@@ -87,7 +87,7 @@ directory. ::
 You are now ready to start using PyTIS!
 
 A few quick checks
-------------------
+~~~~~~~~~~~~~~~~~~
 
 It may be interesting to double check your installation before proceeding,
 unless you `feel lucky`. The PyTIS and MolMod files are installed in the
@@ -113,7 +113,7 @@ should be no errors when importing the modules::
 
 
 Upgrading to the bleeding edge version of PyTIS
-------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In case you want to upgrade PyTIS to the latests development version after a
 previous install, then execute the following commands (in the same directory)::
@@ -123,7 +123,7 @@ previous install, then execute the following commands (in the same directory)::
 
 
 Testing your installation
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For the development and testing one needs to install three additional packages:
 
