@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Cleaning python code in \'`pwd`\' and subdirectories
-for file in $(find *.py doc pytis test examples | egrep "(\.rst$)|(\.py$)|(\.c$)|(\.h$)|(\.i$)|(\.pyf$)"); do
+for file in $(find *.py doc pytis test examples | egrep "(\.rst$)|(\.py$)|(\.c$)|(\.h$)|(\.i$)|(\.pyf$)") README; do
   echo Cleaning ${file}
   sed -i -e $'s/\t/    /' ${file}
   sed -i -e $'s/[ \t]\+$//' ${file}
