@@ -26,7 +26,7 @@ import numpy
 from molmod import boltzmann
 
 
-__all__ = ["get_temperature", "set_boltzmann_velocities", "NVTAndersen"]
+__all__ = ["get_temperature", "set_boltzmann_velocities", "NVTAndersen", "NVE"]
 
 
 def get_temperature(system, state):
@@ -76,3 +76,14 @@ class NVTAndersen(object):
         if numpy.random.uniform(0, 1) < self.rate:
             # Reset all velocities
             set_boltzmann_velocities(self.temp, masses, state)
+
+
+class NVE(object):
+    """The NVE ensemble.
+
+       This ensemble does not update velocities.
+    """
+
+    def update(self, system, state):
+        """Stub that does nothing."""
+        pass
