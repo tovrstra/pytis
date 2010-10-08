@@ -6,8 +6,8 @@ Introduction
 
 PyTIS is work in progress. It works well for the features that are implemented,
 but at the time of writing, only a few things are implemented. The idea is to
-gradually extend PyTIS that it can be used for transition interface sampling, or
-other extended ensemble methods.
+gradually transform PyTIS into Transition Interface Sampling program, and also
+support Extended Ensemble Methods.
 
 
 Tutorial
