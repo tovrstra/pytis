@@ -12,7 +12,7 @@ git checkout gh-pages && (
     mv _sources sources
     for f in $(find | grep -v '/.git'); do sed -e 's/_sources/sources/' -i $f; done
     git add .;
-    #git commit -m 'Automatic documentation update'
+    git commit -m 'Automatic documentation update'
 )
-#rm -rf ../pytis_html
-#git checkout master
+rm -rf ../pytis_html
+git checkout master
