@@ -99,7 +99,7 @@ class CPMDWrapper(object):
         pos_lines = {}
         for i in xrange(system.size):
             l = pos_lines.setdefault(system.symbols[i], [])
-            l.append("    %.7f %.7f %.7f" % tuple(init_state.pos[i]))
+            l.append("    % .15e % .15e % .15e" % tuple(init_state.pos[i]))
         for symbol, lines in pos_lines.iteritems():
             lines.insert(0, "  %i" % len(lines))
             key = "%s_atoms" % (symbol.lower())
@@ -107,7 +107,7 @@ class CPMDWrapper(object):
         ## velocities
         vel_lines = [("  %i " % len(init_state.vel)) + " ".join(str(i+1) for i in xrange(system.size))]
         for row in init_state.vel:
-            vel_lines.append("    %.7f %.7f %.7f" % tuple(row))
+            vel_lines.append("    % .15e % .15e % .15e" % tuple(row))
         subs["velocities"] = "\n".join(vel_lines)
         ## masses (isotopes)
         massmap = {}
@@ -117,10 +117,10 @@ class CPMDWrapper(object):
                 raise ValueError("Atoms with the same symbol must have the same mass.")
         mass_lines = []
         for symbol, mass in sorted(massmap.iteritems()):
-            mass_lines.append("    %.7f" % (mass/amu))
+            mass_lines.append("    % .15e" % (mass/amu))
         subs["isotopes"] = "\n".join(mass_lines)
         ## temperature
-        subs["temp"] = "  %.7f" % (get_temperature(system, init_state))
+        subs["temp"] = "  % .15e" % (get_temperature(system, init_state))
         # write input file
         f = open(os.path.join(dirname, "slice.inp"), "w")
         f.write(self.template.substitute(subs))
